@@ -1,0 +1,24 @@
+{
+  "name": "e-commerce-backend",
+  "version": "1.0.0",
+  "description": "E-commerce REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "node . ",
+    "createDB": "node -r dotenev/config setupDatabascreate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jumboindex/E-commerce-app.git"
+  },
+  "author": "James Ball",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jumboindex/E-commerce-app/issues"
+  },
+  "homepage": "https://github.com/jumboindex/E-commerce-app#readme",
+  "devDependencies": {
+    "dotenv": "^11.0.0",
+    "pg": "^8.7.1"
+  }
+}
