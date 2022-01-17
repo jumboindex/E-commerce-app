@@ -14,7 +14,6 @@ const setupDatabase = async () => {
         stock           INT             NOT NULL
     );
     `
-
     const categoryTable = `
     CREATE TABLE IF NOT EXISTS category (
         id              INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -23,8 +22,6 @@ const setupDatabase = async () => {
         FOREIGN KEY     (product_id) REFERENCES products(id) 
     );
     `
-    
-    
     const usersTable = `
     CREATE TABLE IF NOT EXISTS users (
         id              INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -43,7 +40,6 @@ const setupDatabase = async () => {
         FOREIGN KEY    (user_id) REFERENCES users(id)         
     );
     `
-
     const cartItemsTable = `
     CREATE TABLE IF NOT EXISTS cart_items (
         id              INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -54,7 +50,7 @@ const setupDatabase = async () => {
         FOREIGN KEY    (product_id) REFERENCES products(id)  
     );
     `
-    
+
     const orders = `
     CREATE TABLE IF NOT EXISTS orders (
         id                  INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -66,7 +62,6 @@ const setupDatabase = async () => {
         FOREIGN KEY    (user_id) REFERENCES users(id)   
     );
     `
-
     const orderItems = `
     CREATE TABLE IF NOT EXISTS order_items (
         id              INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -77,7 +72,7 @@ const setupDatabase = async () => {
         FOREIGN KEY    (product_id) REFERENCES products(id)  
     );
     `
-
+    
     try {
         const db = new Client({
             user: DB.PGUSER,
