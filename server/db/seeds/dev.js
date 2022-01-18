@@ -18,7 +18,7 @@ function getRandomIntInclusive (min, max) {
  */
 
 exports.seed =  async function(knex) {
-
+  
   // truncate all existing tables
   await knex.raw('TRUNCATE TABLE "order_items" CASCADE');
   await knex.raw('TRUNCATE TABLE "orders" CASCADE');
@@ -98,5 +98,5 @@ exports.seed =  async function(knex) {
       });
     };
 
-  return  
+  return;  
 };

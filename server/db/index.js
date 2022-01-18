@@ -1,14 +1,11 @@
-const { Pool } = require('pg');
-const { DB } = require('../config');
+const knex = require('knex');
+const knexfile = require('./knexfile');
+const { Model } = require('objection');
 
-const pool = new Pool ({
-    user: DB.PGUSER,
-    host: DB.PGHOST,
-    database: DB.PGDATABASE,
-    password: DB.PGPASSWORD,
-    port: DB.PGPORT
-});
+function setupDB() {
+    const db = knex(knexfile);
+    // plug db config into objection
+    Model.knex(db);
+};
 
-module.exports = {
-    query: (text, params) => pool.query(text, params)
-}; 
+module.exports = setupDB;
