@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 module.exports = {
     DB: {
@@ -9,3 +9,4 @@ module.exports = {
     PGPORT: process.env.PGPORT
     }
 };
+

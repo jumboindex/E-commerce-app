@@ -5,21 +5,21 @@
  */
 exports.up = function(knex) {
   return knex.schema
+  .createTable('category', (table) => {
+    table.increments();
+    table.string('category', 50).notNullable();
+    table.timestamps(true, true);
+    })
     .createTable('products', (table) => {
       table.increments();
       table.string('title').notNullable();
       table.decimal('price', 5, 2).notNullable();
-      table.string('description', 300).notNullable();
+      table.text('description').notNullable();
       table.text('image').notNullable();
       table.decimal('raiting', 2, 1).notNullable();
       table.integer('stock').notNullable();
+      table.integer('category_id').notNullable().references('id').inTable('category');
       table.timestamps(true, true);
-    })
-    .createTable('category', (table) => {
-        table.increments();
-        table.integer('product_id').notNullable().references('id').inTable('products');
-        table.string('category', 50).notNullable();
-        table.timestamps(true, true);
     })
     .createTable('users', (table) => {
         table.increments();
@@ -70,7 +70,7 @@ exports.down = function(knex) {
   .dropTableIfExists('cart_items')
   .dropTableIfExists('cart')
   .dropTableIfExists('users')
-  .dropTableIfExists('category')
-  .dropTableIfExists('products');
+  .dropTableIfExists('products')
+  .dropTableIfExists('category');
   
 };
