@@ -1,6 +1,7 @@
 const { Model } = require('objection');
+const { BaseModel } = require('./BaseModel');
 
-class Users extends Model {
+class Users extends BaseModel {
     static get tableName() {
         return 'users';
     }
@@ -13,8 +14,8 @@ static get jsonSchema() {
         properties: {
             id: {type:'integer'},
             email: {type: 'string', minLength: 1, maxLength: 50},
-            password: {type: 'string'},
-            first_name:{type: 'string', minLength: 1, maxLength: 50},
+            password: {type: 'string', minLength:8, maxLength: 20},
+            first_name: {type: 'string', minLength: 1, maxLength: 50},
             last_name: {type: 'string', minLength: 1, maxLength: 50},
             google: {type:'object'}
             }

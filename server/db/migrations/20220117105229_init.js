@@ -23,7 +23,7 @@ exports.up = function(knex) {
     })
     .createTable('users', (table) => {
         table.increments();
-        table.string('email', 50).notNullable();
+        table.string('email', 50).notNullable().unique();
         table.text('password').notNullable();
         table.string('first_name', 50).notNullable();
         table.string('last_name', 50).notNullable();

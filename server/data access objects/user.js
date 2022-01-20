@@ -2,18 +2,22 @@ const Users = require('../db/models/users');
 
 class UserDAO { 
     
-    createUser(email, password, first_name, last_name, google = null) {
-        Users.query().insert({
+    async createUser(email, password, first_name, last_name, google = null) {
+        return Users.query().insert({
             email, 
             password,
             first_name,
             last_name,
-            google
-        }).returning('id');
+            google: {google}
+        }); 
     }
     
     findByUserId(id) {
         return Users.query().findById(id)
+    }
+
+    findByUserEmail(email) {
+        return Users.query().findOne(email);
     }
 
     findAllUsers() {

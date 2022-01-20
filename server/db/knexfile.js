@@ -23,7 +23,7 @@ module.exports = {
   seeds: {
     directory: './seeds'
   },
-  debug:true,
+  debug: true,
     // utility which automatically converts camelCase to snake_case 
     // so we can use camelCase input feilds 
     ...knexSnakeCaseMappers,
