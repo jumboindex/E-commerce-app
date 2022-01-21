@@ -14,7 +14,6 @@ class UserService {
 
         // add user to db
         return UserDAO.createUser(email, password, first_name, last_name, google);
-        
     }
     
     getUser(id) {
@@ -27,6 +26,21 @@ class UserService {
 
     getUserByEmail(email) {
         return UserDAO.findByUserEmail(email);
+    }
+
+    updateUserDetails(userObj) {
+        const {id, email, password, first_name, last_name, google} = userObj;
+         
+        //validate email
+        if (email) {
+            const validEmail = emailIsValid(email);
+            if (!validEmail) throw new Error('email is invalid!');
+        };
+
+        // todo password hash if present- bcryptjs
+        
+        // update user in db
+        return UserDAO.updateUserDetails(id, email, password, first_name, last_name, google);
     }
 };
 

@@ -14,4 +14,9 @@ userRouter.get('/', (req, res, next) => {
     next();
 }, userController.getAllUsers);
 
+userRouter.put('/', (req, res, next) => {
+    // todo authentication middleware
+    next();
+}, userController.updateUserDetails);
+
 module.exports = userRouter;

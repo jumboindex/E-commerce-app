@@ -6,20 +6,16 @@ class UserController {
 
     async createUser(req, res, next) {
         try {
-            
             const newUser = await UserService.createUser(req.body);
-        
-            //if (!newUser) return next(ApiError.badRequest('cannot create new user due to invalid input'));
-
             res.status(200).json(newUser);
 
         } catch (err) {
             if (err.message === 'email is invalid!') {
-                next(ApiError.badRequest(err.message));
+                return next(ApiError.badRequest(err.message));
             } else if (err.type === 'ModelValidation') {
-                next(ApiError.badRequest(err.message))
+                return next(ApiError.badRequest(err.message))
             } else if (err instanceof UniqueViolationError) {
-                next(ApiError.badRequest('email registered under another account!'))
+                return next(ApiError.badRequest('email registered under another account!'))
             };
             next(err);
         }
@@ -33,7 +29,6 @@ class UserController {
                 next(ApiError.badRequest('user not found!'))
                 return;
             }
-
             res.status(200).json(user);
 
         } catch (err) {
@@ -46,6 +41,28 @@ class UserController {
             const allUsers = await UserService.getAllUsers();
             res.status(200).json(allUsers);
         } catch (err) { 
+            next(err);
+        }
+    }
+
+    async updateUserDetails(req, res, next) {
+        try {
+            const updatedUser = await UserService.updateUserDetails(req.body);
+            
+            if (!updatedUser) {
+                next(ApiError.badRequest('user not found!'))
+            return;
+        }
+        res.status(200).json(updatedUser);
+        
+        } catch (err) {     
+            if (err.message === 'email is invalid!') {
+                return next(ApiError.badRequest(err.message));
+            } else if (err.type === 'ModelValidation') {
+                return next(ApiError.badRequest(err.message))
+            } else if (err instanceof UniqueViolationError) {
+                return next(ApiError.badRequest('email registered under another account!'))
+            };
             next(err);
         }
     }
