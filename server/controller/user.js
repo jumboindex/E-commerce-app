@@ -7,7 +7,7 @@ class UserController {
     async createUser(req, res, next) {
         try {
             const newUser = await UserService.createUser(req.body);
-            res.status(200).json(newUser);
+            return  res.status(200).json(newUser);
 
         } catch (err) {
             if (err.message === 'email is invalid!') {
@@ -26,10 +26,10 @@ class UserController {
             const user = await UserService.getUser(req.params.userid);
 
             if (!user) {
-                next(ApiError.badRequest('user not found!'))
-                return;
+                return next(ApiError.badRequest('user not found!'));
             }
-            res.status(200).json(user);
+
+            return res.status(200).json(user);
 
         } catch (err) {
             next(err)
@@ -42,6 +42,21 @@ class UserController {
             res.status(200).json(allUsers);
         } catch (err) { 
             next(err);
+        }
+    }
+
+    async validateUser(req, res, next) {
+        try {
+            const user = await UserService.getUser(req.params.userid);
+            if (!user) {
+                return next(ApiError.badRequest('user not found!'));
+                
+            } else {
+                next()
+            }
+
+        } catch (err) {
+            next(err)
         }
     }
 
@@ -64,6 +79,20 @@ class UserController {
                 return next(ApiError.badRequest('email registered under another account!'))
             };
             next(err);
+        }
+    }
+
+    async  deleteUserDetails(req, res, next) {
+
+        try {
+            const deletedUser = await UserService.deleteUserById(req.params.userid);
+            return res.status(204).json(deletedUser);
+
+        } catch (err) {
+            if (err instanceof ReferenceError) {
+                return next(ApiError.badRequest(err.message))
+            }
+            next(err)
         }
     }
 }

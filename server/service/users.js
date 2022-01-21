@@ -42,6 +42,10 @@ class UserService {
         // update user in db
         return UserDAO.updateUserDetails(id, email, password, first_name, last_name, google);
     }
+
+    deleteUserById(id) {
+         return UserDAO.deleteUserById(id);
+    }
 };
 
 module.exports = new UserService();

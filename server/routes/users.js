@@ -19,4 +19,9 @@ userRouter.put('/', (req, res, next) => {
     next();
 }, userController.updateUserDetails);
 
+userRouter.delete('/:userid', (req, res, next) => {
+    // todo authentication middleware
+    next();
+}, userController.validateUser, userController.deleteUserDetails);
+
 module.exports = userRouter;

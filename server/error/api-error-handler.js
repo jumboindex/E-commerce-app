@@ -17,7 +17,7 @@ function apiErrorHandler(err, req, res, next) {
         return res.status(200).json(
             `Not null constraint failed for table ${err.table} and column ${err.column}`);
     } else if (err instanceof DBError) {
-        return res.status(500).json(`Some unknown DB error ${dbError.nativeError}`);
+        return res.status(500).json(`Some unknown DB error occured ${err.message} invalid syntax`);
     } else {
         return res.status(500).json('Something went wrong!');
     } 
