@@ -2,7 +2,7 @@ const Users = require('../db/models/users');
 
 class UserDAO { 
     
-    async createUser(email, password, first_name, last_name, google = null) {
+    createUser(email, password, first_name, last_name, google = null) {
         return Users.query().insert({
             email, 
             password,

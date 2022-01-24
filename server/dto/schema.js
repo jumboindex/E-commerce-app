@@ -18,7 +18,7 @@ const updateUserDto  = yup.object().shape({
     first_name: yup.string().trim(),
     last_name: yup.string().trim(),
     google: yup.object().notRequired()
-})
+});
 
 module.exports = {
     userDTO,
