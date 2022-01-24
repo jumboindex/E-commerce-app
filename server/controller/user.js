@@ -28,7 +28,7 @@ class UserController {
             if (!user) {
                 return next(ApiError.badRequest('user not found!'));
             }
-
+            
             return res.status(200).json(user);
 
         } catch (err) {
@@ -49,8 +49,7 @@ class UserController {
         try {
             const user = await UserService.getUser(req.params.userid);
             if (!user) {
-                return next(ApiError.badRequest('user not found!'));
-                
+                return next(ApiError.badRequest('user not found!'));  
             } else {
                 next()
             }

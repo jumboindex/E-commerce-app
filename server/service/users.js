@@ -6,10 +6,6 @@ class UserService {
     createUser(userObj) {
         const {email, password, first_name, last_name, google} = userObj;
         
-        // validate email 
-        const validEmail = emailIsValid(email);
-        if (!validEmail) throw new Error('email is invalid!');
-
         // todo password hash - bcryptjs
 
         // add user to db
@@ -31,12 +27,6 @@ class UserService {
     updateUserDetails(userObj) {
         const {id, email, password, first_name, last_name, google} = userObj;
          
-        //validate email
-        if (email) {
-            const validEmail = emailIsValid(email);
-            if (!validEmail) throw new Error('email is invalid!');
-        };
-
         // todo password hash if present- bcryptjs
         
         // update user in db
