@@ -1,5 +1,4 @@
 const UserDAO = require('../data access objects/user');
-const { emailIsValid } = require('../helpers/uservalidation');
 
 class UserService {
     

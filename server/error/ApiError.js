@@ -12,6 +12,14 @@ class ApiError {
         return new ApiError(500, msg);
     }
 
+    static uniqueViolationError(msg) {
+        return new ApiError(409, msg);
+    }
+
+    static notFound(msg) {
+        return new ApiError(404, msg);
+    }
+
 };
 
 module.exports = ApiError;
