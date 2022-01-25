@@ -18,8 +18,7 @@ exports.up = function(knex) {
       table.text('image').notNullable();
       table.decimal('raiting', 2, 1).notNullable();
       table.integer('stock').notNullable();
-      table.integer('category_id').notNullable().references('id').inTable('category');
-      table.timestamps(true, true);
+      table.integer('category_id').references('id').inTable('category').onDelete('SET NULL');
     })
     .createTable('users', (table) => {
         table.increments();
@@ -32,19 +31,19 @@ exports.up = function(knex) {
     })  
     .createTable('cart', (table) => {
         table.increments();
-        table.integer('user_id').notNullable().references('id').inTable('users');
+        table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE');
         table.timestamps(true, true);
     })  
     .createTable('cart_items', (table) => {
         table.increments();
-        table.integer('cart_id').notNullable().references('id').inTable('cart');
+        table.integer('cart_id').notNullable().references('id').inTable('cart').onDelete('CASCADE');
         table.integer('product_id').notNullable().references('id').inTable('products');
         table.integer('quantity').notNullable();
         table.timestamps(true, true);
     })
     .createTable('orders', (table) => {
         table.increments();
-        table.integer('user_id').notNullable().references('id').inTable('users');
+        table.integer('user_id').references('id').inTable('users').onDelete('SET NULL');
         table.decimal('amount', 6, 2).notNullable();
         table.text('shipping_address').notNullable();
         table.string('status', 30).notNullable();
@@ -52,7 +51,7 @@ exports.up = function(knex) {
     })
     .createTable('order_items', (table) => {
         table.increments();
-        table.integer('order_id').notNullable().references('id').inTable('orders');
+        table.integer('order_id').notNullable().references('id').inTable('orders').onDelete('CASCADE');
         table.integer('product_id').notNullable().references('id').inTable('products');
         table.integer('quantity').notNullable();
         table.timestamps(true, true);
