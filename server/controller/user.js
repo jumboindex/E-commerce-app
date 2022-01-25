@@ -20,7 +20,7 @@ class UserController {
 
     async getUser(req, res, next) {
         try {
-            const user = await UserService.getUser(req.params.userid);
+            const user = await UserService.getUser(req.body.id);
             if (!user) return next(ApiError.notFound('user not found!'));
             return res.status(200).json(user);
         } catch (err) {
@@ -39,7 +39,7 @@ class UserController {
 
     async validateUser(req, res, next) {
         try {
-            const user = await UserService.getUser(req.params.userid);
+            const user = await UserService.getUser(req.body.id);
             if (!user) return next(ApiError.notFound('user not found!'));  
             else return next()
         } catch (err) {
@@ -64,7 +64,7 @@ class UserController {
 
     async  deleteUserDetails(req, res, next) {
         try {
-            const deletedUser = await UserService.deleteUserById(req.params.userid);
+            const deletedUser = await UserService.deleteUserById(req.body.id);
             return res.status(204).json(deletedUser);
         } catch (err) {
             if (err instanceof ReferenceError) {

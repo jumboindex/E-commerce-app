@@ -10,7 +10,7 @@ const userDTO = yup.object().shape({
     google: yup.object().notRequired()
 });
 
-const updateUserDto  = yup.object().shape({
+const updateUserDto = yup.object().shape({
     id: yup.number().positive().integer().required('User ID id required'),
     password: yup.string()
                 .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
@@ -20,7 +20,12 @@ const updateUserDto  = yup.object().shape({
     google: yup.object().notRequired()
 });
 
+const routeParam = yup.object().shape({
+    id: yup.number().positive().integer().required('ID is required for get request')
+});
+
 module.exports = {
     userDTO,
-    updateUserDto
+    updateUserDto,
+    routeParam
 }

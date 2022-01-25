@@ -14,11 +14,11 @@ class ProductController {
 
     async getProductById(req, res, next) {
         try {
-            const product = await ProductService.getProductById(req.params.productId)
+            const product = await ProductService.getProductById(req.body.id)
             if (!product) return next(ApiError.notFound('product not found!'))
             return res.status(200).json(product);
         } catch (err) {
-            next(err)
+            next(err);
         }
     }
 };
