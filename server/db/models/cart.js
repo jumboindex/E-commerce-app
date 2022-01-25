@@ -1,5 +1,7 @@
 const { Model } = require('objection');
+const cart = require('../../data access objects/cart');
 const { BaseModel } = require('./BaseModel');
+
 
 class Cart extends BaseModel {
 
@@ -21,6 +23,7 @@ class Cart extends BaseModel {
 
     static get relationMappings() {
         const Users = require('./users');
+        const Cart_items = require('./cart_items');
         const Products = require('./products');
 
         return {
@@ -34,6 +37,16 @@ class Cart extends BaseModel {
             },
 
             cart_items: {
+                relation: Model.HasManyRelation,
+                modelClass: Cart_items,
+                join: {
+                    from: 'cart.id',
+                    to: 'cart_items.cart_id'
+                }
+
+            },
+
+            products: {
                 relation: Model.ManyToManyRelation,
                 modelClass: Products,
                 join: {
