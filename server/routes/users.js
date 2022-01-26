@@ -1,7 +1,7 @@
 const express = require('express');
 const userRouter = express.Router();
 const userController = require('../controller/user');
-const { userDTO, updateUserDto, routeParam } = require('../dto/schema');
+const { userDTO, updateUserDto, routeParamUser } = require('../dto/schema');
 const { validateDto } = require('../middleware/validate-dto');
 
 
@@ -19,7 +19,7 @@ userRouter.post('/',  (req, res, next) => {
 userRouter.get('/:id', (req, res, next) => {
     // todo authentication middleware
     next();
-}, validateDto(routeParam), userController.getUser);
+}, validateDto(routeParamUser), userController.getUser);
 
 userRouter.get('/', (req, res, next) => {
     // todo authentication middleware
@@ -34,6 +34,6 @@ userRouter.put('/', (req, res, next) => {
 userRouter.delete('/:id', (req, res, next) => {
     // todo authentication middleware
     next();
-}, validateDto(routeParam), userController.validateUser, userController.deleteUserDetails);
+}, validateDto(routeParamUser), userController.validateUser, userController.deleteUserDetails);
 
 module.exports = userRouter;

@@ -1,36 +1,33 @@
 const express = require('express');
 const cartRouter = express.Router();
 const cartController = require('../controller/cart');
+const { routeParamCart, cartDTO } = require('../dto/schema');
+const { validateDto } = require('../middleware/validate-dto');
 
 
-/* userRouter.param('id', (req, res, next, id) => {
-  req.body.id = id
+cartRouter.param('userId', (req, res, next, id) => {
+  req.body.user_id = id
   next();
-}); */
+});
+
+cartRouter.get('/:userId', (req, res, next) => {
+    // todo authentication middleware
+    next()
+},  validateDto(routeParamCart), 
+    cartController.validateCartByUserId, 
+    cartController.getCartWithItems);
 
 cartRouter.post('/',  (req, res, next) => {
     // todo authentication middleware
     next()
-}, cartController.createCart);
+}, validateDto(cartDTO), cartController.createCart);
 
-/* userRouter.get('/:id', (req, res, next) => {
-    // todo authentication middleware
-    next();
-}, validateDto(routeParam), userController.getUser);
+cartRouter.put('/', (req, res, next) => {
+    //todo auth middleware
+    next()
+},  validateDto(cartDTO),
+    cartController.validateCartByUserId,
+    cartController.addItemToCart);
 
-userRouter.get('/', (req, res, next) => {
-    // todo authentication middleware
-    next();
-}, userController.getAllUsers);
 
-userRouter.put('/', (req, res, next) => {
-    // todo authentication middleware
-    next();
-}, validateDto(updateUserDto), userController.updateUserDetails);
-
-userRouter.delete('/:id', (req, res, next) => {
-    // todo authentication middleware
-    next();
-}, validateDto(routeParam), userController.validateUser, userController.deleteUserDetails);
- */
 module.exports = cartRouter;

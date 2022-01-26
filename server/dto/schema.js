@@ -20,12 +20,24 @@ const updateUserDto = yup.object().shape({
     google: yup.object().notRequired()
 });
 
-const routeParam = yup.object().shape({
+const cartDTO = yup.object().shape({
+    user_id: yup.number().positive().integer().required('User ID is required'),
+    product_id: yup.number().positive().integer().required('Product ID is required'),
+    quantity: yup.number().positive().integer().required('Quantity is required')
+})
+
+const routeParamUser = yup.object().shape({
     id: yup.number().positive().integer().required('ID is required for get request')
+});
+
+const routeParamCart = yup.object().shape({
+    user_id: yup.number().positive().integer().required('User ID is required for get request')
 });
 
 module.exports = {
     userDTO,
     updateUserDto,
-    routeParam
+    cartDTO,
+    routeParamUser, 
+    routeParamCart,  
 }

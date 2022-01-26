@@ -13,8 +13,41 @@ class CartController {
                 return next(ApiError.badRequest(err.message))
             } else if (err instanceof UniqueViolationError) {
                 return next(ApiError.uniqueViolationError('UniqueViolationError'))
+            } else if (err.message === 'Cart already exists for user') {
+                return next(ApiError.uniqueViolationError(err.message))
             };
             next(err);
+        }
+    }
+
+    async getCartWithItems(req, res, next) {
+        try {
+            const cartWithItems = await CartService.findCartWithItems(req.body.user_id);
+            return res.status(200).json(cartWithItems);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async validateCartByUserId(req, res, next) {
+        try {
+            const cartExists = await CartService.findCartByUser(req.body.user_id);
+            if (!cartExists) return next(ApiError.notFound('Cart not Found'));  
+            else return next()
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async addItemToCart(req, res, next) {
+        try {
+            const updatedCartWithItems = await CartService.addItemToCart(req.body)
+            return res.status(200).json(updatedCartWithItems);
+        } catch (err) {
+            if (err.message === 'Item already in cart') {
+                return next(ApiError.badRequest(err.message))
+            }
+            next(err)
         }
     }
 
