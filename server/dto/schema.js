@@ -30,8 +30,16 @@ const routeParamUser = yup.object().shape({
     id: yup.number().positive().integer().required('ID is required for get request')
 });
 
-const routeParamCart = yup.object().shape({
-    user_id: yup.number().positive().integer().required('User ID is required for get request')
+const routeParamCartUserId = yup.object().shape({
+    user_id: yup.number().positive().integer().required('User ID is required')
+});
+
+const routeParamCartProductId = yup.object().shape({
+    product_id: yup.number().positive().integer().required('Product ID is required')
+});
+
+const routeParamCartId = yup.object().shape({
+    cart_id: yup.number().positive().integer().required('Cart ID is required')
 });
 
 module.exports = {
@@ -39,5 +47,7 @@ module.exports = {
     updateUserDto,
     cartDTO,
     routeParamUser, 
-    routeParamCart,  
+    routeParamCartUserId,
+    routeParamCartProductId,
+    routeParamCartId  
 }

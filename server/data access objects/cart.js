@@ -63,6 +63,10 @@ class CartDAO {
             throw new Error('transaction error whilst updating cart')
         }
     }
+
+    deleteCart(cartId) {
+        return Cart.query().deleteById(cartId);
+    }
    
 
 };

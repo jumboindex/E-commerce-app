@@ -35,9 +35,10 @@ class CartController {
             if (!cartExists) return next(ApiError.notFound('Cart not Found'));  
             else return next()
         } catch (err) {
-            next(err)
+            next(err);
         }
     }
+
 
     async addItemToCart(req, res, next) {
         try {
@@ -47,6 +48,48 @@ class CartController {
             if (err.message === 'Item already in cart') {
                 return next(ApiError.badRequest(err.message))
             }
+            next(err);
+        }
+    }
+
+    async incrementItemInCart(req, res, next) {
+        try {
+            const updatedLineItem = await CartService.incrementCartItem(req.body);
+            return res.status(200).json(updatedLineItem);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async decrementItemInCart(req, res, next) {
+        try {
+            const updatedLineItem = await CartService.decrementCartItem(req.body);
+            return res.status(200).json(updatedLineItem);
+        } catch (err) {
+            if (err.message = 'Item is not in cart or cannot be 0') {
+                next(ApiError.badRequest(err.message));
+            }
+            next(err);
+        }
+    }
+
+    async removeItemInCart(req, res, next) {
+        try {
+            const removedItem = await CartService.removeItemFromCart(req.body);
+            return res.status(204).json(removedItem);
+        } catch (err) { 
+            if (err.message = 'Item is not in cart') {
+                return next(ApiError.badRequest(err.message))
+            }
+            next(err);
+        }
+    }
+
+    async deleteCartById(req, res, next) {
+        try {
+            const deletedCart = await CartService.deleteCart(req.body.cart_id);
+            return res.status(204).json(deletedCart);
+        } catch (err) {
             next(err)
         }
     }

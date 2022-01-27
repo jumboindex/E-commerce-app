@@ -9,19 +9,21 @@ class UserDAO {
             first_name,
             last_name,
             google: {google}
-        }); 
+        }).returning(['first_name', 'last_name', 'email']); 
     }
     
     findByUserId(id) {
         return Users.query().findById(id)
+        .returning(['first_name', 'last_name', 'email'])
     }
 
     findByUserEmail(email) {
-        return Users.query().findOne(email);
+        return Users.query().findOne(email)
+        .returning(['first_name', 'last_name', 'email']);
     }
 
     findAllUsers() {
-        return Users.query();
+        return Users.query().returning(['first_name', 'last_name', 'email']);
     }
 
     updateUserDetails(id, email, password, first_name, last_name) {
@@ -30,7 +32,7 @@ class UserDAO {
             password,
             first_name,
             last_name
-        })
+        }).returning(['first_name', 'last_name', 'email']);
     }
 
     deleteUserById(id) {
