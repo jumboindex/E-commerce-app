@@ -32,7 +32,7 @@ class CartDAO {
             user_id: user_id
         });
     }
-
+// possible dupe
     findCartLineItems(id) {
         return Cart.relatedQuery('cart_items').for(id);
     }

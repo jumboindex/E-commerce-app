@@ -1,9 +1,9 @@
 const Cart_Items = require('../db/models/cart_items');
 
 class CartItemsDAO { 
-    
+     // used for creating order 
     findCartItemsByCartId(cart_id) {
-        return Cart_Items.query().select(['cart_id', 'product_id', 'quantity'])
+        return Cart_Items.query().select(['product_id', 'quantity'])
         .where({ cart_id });
     }
 

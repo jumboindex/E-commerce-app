@@ -3,6 +3,7 @@ const Orders = require('../db/models/orders');
 class OrdersDAO { 
     
     createNewOrder(orderObj, cartItems) {
+    
         const {user_id, amount, shipping_address, status} = orderObj;
         try {
             const order = Orders.transaction(async trx => {
@@ -14,30 +15,28 @@ class OrdersDAO {
                     status: status
                 });
             
-                // cartItems is an object which contains cart_id, product_id and quantity for
-                // each cart item. We need to add order_id, product_id and quantity to order_items table. 
-                const cartItemkeys = Object.keys(cartItems)
-                let itemArr = [];
-                cartItemkeys.forEach( key => {
-                  itemArr.push({
-                    order_id: newOrder.id,
-                    product_id: cartItems[key].product_id,
-                    quantity: cartItems[key].quantity})
-                }); 
+                // cartItems is an array of objects which conatins order 
+                // items product_id and quantity ordered.
+              
                 // add order items to order
-                const orderItems = await newOrder.$relatedQuery('order_items', trx).insert(
-                    itemArr
+                const orderItems = await newOrder.$relatedQuery('order_items', trx)
+                .insert(
+                   cartItems.map(item => ({ order_id: newOrder.id,
+                                            product_id: item.product_id, 
+                                            quantity: item.quantity }))
                 );
                 // find related products    
                 const products = await newOrder.$relatedQuery('products', trx);
 
-                return {newOrder, orderItems, products}
+                return { newOrder, 
+                        orderItems, 
+                        products }
             });
 
             return order
-            
+
         } catch (err) {
-            console.log(err)
+            
             throw new Error('transaction error whilst creating order')
         }
     }
