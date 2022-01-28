@@ -1,4 +1,4 @@
-const ProductDAO = require('../data access objects/products');
+const ProductDAO = require('../dao/products');
 
 class ProductService {
     getAllProducts() {

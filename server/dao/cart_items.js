@@ -2,11 +2,16 @@ const Cart_Items = require('../db/models/cart_items');
 
 class CartItemsDAO { 
     
+    findCartItemsByCartId(cart_id) {
+        return Cart_Items.query().select(['cart_id', 'product_id', 'quantity'])
+        .where({ cart_id });
+    }
+
     findCartItemByCartIdAndProductId(cart_id, product_id) {
         return Cart_Items.query().findOne({
             cart_id: cart_id,
             product_id: product_id
-        });
+        }).returning(['cart_id', 'product_id', 'quantity']);
     }
 
     incrimentCartItemQuantity(cart_id, product_id) {

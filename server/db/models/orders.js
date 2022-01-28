@@ -55,7 +55,7 @@ static get relationMappings () {
                         from: 'order_items.order_id',
                         to: 'order_items.product_id'
                     },
-                    to: 'product.id'
+                    to: 'products.id'
                 }
             }    
         }

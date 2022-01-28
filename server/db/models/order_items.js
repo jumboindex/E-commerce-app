@@ -13,7 +13,7 @@ class Order_items extends BaseModel {
 
             properties: {
                 id: {type:'integer'},
-                order_id: {type: 'interger'},
+                order_id: {type: 'integer'},
                 product_id: {type: 'integer'},
                 quantity: {type: 'integer'}
             }

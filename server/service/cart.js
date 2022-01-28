@@ -1,5 +1,6 @@
-const CartDAO = require('../data access objects/cart');
-const CartItemsDAO = require('../data access objects/cart_items');
+const CartDAO = require('../dao/cart');
+const CartItemsDAO = require('../dao/cart_items');
+
 
 class CartService {
     
@@ -18,6 +19,14 @@ class CartService {
         };
     }
 
+    findCartById(cart_id) {
+        return CartDAO.findCartById(cart_id);
+    }
+
+    findCartByUser(user_id) {
+        return CartDAO.findCartByUserId(user_id);
+    }
+    // used for loading existing cart when logged in
     async findCartWithItems(user_id) {
         const cart = await CartDAO.findCartByUserId(user_id);
         const lineItems = await CartDAO.findCartLineItems(cart.id);
@@ -28,9 +37,9 @@ class CartService {
             productsInCart
         };
     }
-
-    findCartByUser(user_id) {
-        return CartDAO.findCartByUserId(user_id);
+    // used for creating order 
+    findCartItemsByCartId(cart_id) {
+        return CartItemsDAO.findCartItemsByCartId(cart_id);
     }
 
     async addItemToCart(cartObj) {

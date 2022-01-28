@@ -13,8 +13,8 @@ class UserDAO {
     }
     
     findByUserId(id) {
-        return Users.query().findById(id)
-        .returning(['first_name', 'last_name', 'email'])
+        return Users.query().returning(['first_name', 'last_name', 'email'])
+        .findById(id);
     }
 
     findByUserEmail(email) {

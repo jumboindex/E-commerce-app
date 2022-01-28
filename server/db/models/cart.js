@@ -1,5 +1,5 @@
 const { Model } = require('objection');
-const cart = require('../../data access objects/cart');
+const cart = require('../../dao/cart');
 const { BaseModel } = require('./BaseModel');
 
 

@@ -1,4 +1,4 @@
-const UserDAO = require('../data access objects/user');
+const UserDAO = require('../dao/user');
 
 class UserService {
     
