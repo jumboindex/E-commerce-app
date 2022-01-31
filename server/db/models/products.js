@@ -14,7 +14,7 @@ static get jsonSchema() {
         properties: {
             id: {type:'integer'},
             title: {type: 'string'},
-            price: {type: 'integer'},
+            price: {type: 'number'},
             description:{type:'string'},
             image: {type:'string'},
             raiting: {type:'integer'},

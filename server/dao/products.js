@@ -9,8 +9,19 @@ class ProductsDAO  {
     findAllProducts() {
         return Products.query();
     }
-
-    
+    // used when placing order 
+    decrementProductQuantity(product_id, quantityPurchased) {
+        return Products.query().where({
+            id: product_id
+        }).decrement('stock', quantityPurchased); 
+    }
+    // used to reverse unpaid orders or update stock
+    incrementProductQuantity(product_id, quantityPurchased) {
+        return Products.query().where({
+            id: product_id
+        }).increment('stock', quantityPurchased); 
+    }
+  
 }
 
 module.exports = new ProductsDAO;

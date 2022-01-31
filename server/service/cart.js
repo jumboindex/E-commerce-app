@@ -22,7 +22,7 @@ class CartService {
     findCartById(cart_id) {
         return CartDAO.findCartById(cart_id);
     }
-
+    // used by checkout
     findCartByUser(user_id) {
         return CartDAO.findCartByUserId(user_id);
     }
@@ -40,6 +40,14 @@ class CartService {
     // used for creating order 
     findCartItemsByCartId(cart_id) {
         return CartItemsDAO.findCartItemsByCartId(cart_id);
+    }
+    // used for creating order - remove??
+/*     getCartproducts (cart_id) {
+        return CartDAO.findCartWithRelatedProducts(cart_id);
+    } */
+    // used for pulling product ID, quantity and price per item
+    getCartItemsAndRelatedProductsPrice (cart_id) {
+        return CartItemsDAO.findCartItemsAndRelatedProductsPrice(cart_id);
     }
 
     async addItemToCart(cartObj) {

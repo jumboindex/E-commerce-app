@@ -27,39 +27,41 @@ class OrdersDAO {
                 );
                 // find related products    
                 const products = await newOrder.$relatedQuery('products', trx);
-
+        
                 return { newOrder, 
                         orderItems, 
                         products }
-            });
+                });
 
             return order
 
         } catch (err) {
-            
             throw new Error('transaction error whilst creating order')
         }
     }
 
-    getAllOrders() {
-
+    findAllOrders() {
+        return Orders.query();
     }
 
-
-    getOrderAndOrderItemsById(id) {
+    findAllCustomerOrders(user_id) {
+        return Orders.query().where({user_id: user_id})
+    }
+    
+    findOrderAndOrderItemsById(id) {
         return Orders.relatedQuery('order_items').where({order_id: id})
     }
-
-    getOrderAndProductsById(id) {
+    
+    findOrderAndProductsById(id) {
         return Orders.relatedQuery('products').where({order_id: id});
     }
 
-    updateOrderStatusById() {
-
+    updateOrderStatusById(id, status) {
+        return Orders.query().findById(id).patch({status: status});
     }
 
-    DeletOrderById() {
-
+    DeletOrderById(id) {
+        return Orders.query().deleteById(id);
     }
 
 

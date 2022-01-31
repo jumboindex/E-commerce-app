@@ -7,7 +7,7 @@ class UserController {
     async createUser(req, res, next) {
         try {
             const newUser = await UserService.createUser(req.body);
-            return res.status(200).json(newUser);
+            return res.status(201).json(newUser);
         } catch (err) {
             if (err.type === 'ModelValidation') {
                 return next(ApiError.badRequest(err.message))

@@ -1,3 +1,4 @@
+const Cart_items = require('../db/models/cart_items');
 const Cart_Items = require('../db/models/cart_items');
 
 class CartItemsDAO { 
@@ -5,6 +6,12 @@ class CartItemsDAO {
     findCartItemsByCartId(cart_id) {
         return Cart_Items.query().select(['product_id', 'quantity'])
         .where({ cart_id });
+    }
+
+    findCartItemsAndRelatedProductsPrice(cart_id) {
+        return Cart_items.query().select(['cart_items.product_id', 'cart_items.quantity', 'products.price'])
+        .innerJoin('products', 'cart_items.product_id', 'products.id' )
+        .where('cart_id', cart_id);
     }
 
     findCartItemByCartIdAndProductId(cart_id, product_id) {
