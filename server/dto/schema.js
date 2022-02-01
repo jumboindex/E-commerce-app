@@ -42,6 +42,23 @@ const routeParamCartId = yup.object().shape({
     cart_id: yup.number().positive().integer().required('Cart ID is required')
 });
 
+const routeParamOrderId = yup.object().shape({
+    order_id: yup.number().positive().integer().required('Order ID is required')
+});
+
+const orderDTO = yup.object().shape({
+    cart_id: yup.number().positive().integer().required('Cart ID is required'),
+    shipping_address: yup.object().shape({
+        house_number: yup.number().positive().integer(),
+        address_1: yup.string().required('street address is required').trim(),
+        address_2: yup.string().trim(),
+        town: yup.string().required('Town is required').trim(),
+        county: yup.string().required('County is required').trim(),
+        post_code: yup.string().matches(/^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0A{2})$/, 
+        'Must be a valid UK postcode - we do not post to British overseas uk overseas territories')
+    })
+})
+
 module.exports = {
     userDTO,
     updateUserDto,
@@ -49,5 +66,7 @@ module.exports = {
     routeParamUser, 
     routeParamCartUserId,
     routeParamCartProductId,
-    routeParamCartId  
+    routeParamCartId,
+    routeParamOrderId,
+    orderDTO  
 }

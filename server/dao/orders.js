@@ -44,16 +44,17 @@ class OrdersDAO {
         return Orders.query();
     }
 
-    findAllCustomerOrders(user_id) {
-        return Orders.query().where({user_id: user_id})
+    findAllCustomerOrders(customerid) {
+        console.log('running correct query')
+        return Orders.query().where({user_id: customerid})
     }
     
     findOrderAndOrderItemsById(id) {
-        return Orders.relatedQuery('order_items').where({order_id: id})
+        return Orders.relatedQuery('order_items').for(id)
     }
     
     findOrderAndProductsById(id) {
-        return Orders.relatedQuery('products').where({order_id: id});
+        return Orders.relatedQuery('products').for(id);
     }
 
     updateOrderStatusById(id, status) {

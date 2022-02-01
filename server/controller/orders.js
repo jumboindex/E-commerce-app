@@ -7,7 +7,6 @@ class OrdersController {
     async createOrder(req, res, next) {
         try {
             //changed to checkout
-            console.log(req.body)
             const newOrder = await OrdersService.checkout(req.body)
             return res.status(201).json(newOrder);
         } catch (err) {
@@ -17,7 +16,7 @@ class OrdersController {
             next(err)
         }
     }
-    // no route
+  
     async getAllOrders(req, res, next) {
         try {
             const allOrders = await OrdersService.getAllOrders();
@@ -26,16 +25,20 @@ class OrdersController {
             next(err)
         }
     }
-    // no route
+    
     async getAllCustomerOrdersByCustomerId(req, res, next) {
         try {
-            const customerOrders = await OrdersService.getAllOrdersByCustomerId(req.body.user_id);
+            const customerOrders = await OrdersService.getAllOrdersByCustomerId(req.body.user_id);            
+            if (customerOrders.length === 0) throw new Error('No orders for customer');
             return res.status(200).json(customerOrders);
         } catch (err) {
+            if (err.message = 'No orders for customer') {
+                next(ApiError.notFound(err.message));
+            }
             next(err)
         }
     }
-    // no route
+    
     async getOrderAndOrderItemsById(req, res, next) {
         try {
             const orderAndItems = await OrdersService.getOrderAndOrderItemsById(req.body.order_id);

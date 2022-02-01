@@ -50,7 +50,7 @@ class UserController {
     async updateUserDetails(req, res, next) {
         try {
             const updatedUser = await UserService.updateUserDetails(req.body);
-            if (!updatedUser) return next(ApiError.notFound('user not found!'));
+            if (updatedUser === undefined) return next(ApiError.notFound('user not found!'));
             return res.status(200).json(updatedUser);
         } catch (err) {     
            if (err.type === 'ModelValidation') {

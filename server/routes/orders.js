@@ -1,6 +1,9 @@
 const express = require('express');
 const orderRouter = express.Router();
-const OrdersController = require('../controller/orders')
+const OrdersController = require('../controller/orders');
+const { orderDTO, routeParamOrderId } = require('../dto/schema');
+const { validateDto } = require('../middleware/validate-dto');
+
 
 
 
@@ -9,16 +12,38 @@ orderRouter.param('cartId', (req, res, next, id) => {
     next();
 }); 
 
+orderRouter.param('orderId', (req, res, next, id) => {
+    console.log(id)
+    req.body.order_id = id
+    next();
+}); 
 
-
-// create new cart 
+// create new order 
 orderRouter.post('/create/:cartId',  (req, res, next) => {
     // todo authentication middleware
     next()
-}, OrdersController.createOrder);
+}, validateDto(orderDTO), OrdersController.createOrder);
 
+// getAllOrders
+orderRouter.get('/orders', (req, res, next) => {
+    // auth
+    next()
+}, OrdersController.getAllOrders)
+    
+// getAllCustomerOrdersByCustomerId
+orderRouter.get('/orders/customer', (req, res, next) => {
+    // auth todo pass customer id via session
+    next()
+}, OrdersController.getAllCustomerOrdersByCustomerId)
 
+// getOrderAndOrderItemsById
+orderRouter.get('/orders/:orderId', (req, res, next) => {
+    // auth 
+    next()
+}, validateDto(routeParamOrderId), OrdersController.getOrderAndOrderItemsById)
 
+// updateOrderStatus
 
+// DeletOrderById
 
 module.exports = orderRouter;

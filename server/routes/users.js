@@ -25,7 +25,7 @@ userRouter.get('/', (req, res, next) => {
     // todo authentication middleware
     next();
 }, userController.getAllUsers);
-// update user details
+// update user details - todo change to :id
 userRouter.put('/', (req, res, next) => {
 // todo authentication middleware
     next();

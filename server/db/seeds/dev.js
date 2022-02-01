@@ -64,7 +64,13 @@ exports.seed =  async function(knex) {
     await knex('orders').insert({
       user_id: getRandomIntInclusive(1, 100),
       amount: getRandomIntInclusive(7.95, 2000),
-      shipping_address: faker.fake("{{address.streetAddress}}, {{address.city}}, {{address.county}}, {{address.zipCode}}"),
+      shipping_address: { house_number: null,
+                          address_1: faker.address.streetAddress(),
+                          town: faker.address.city(), 
+                          county: faker.address.city(),
+                          post_code: faker.address.zipCode()
+                        },
+      //faker.fake("{{address.streetAddress}}, {{address.city}}, {{address.county}}, {{address.zipCode}}"),
       status: 'fulfilled'
     })
   }

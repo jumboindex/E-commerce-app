@@ -15,7 +15,17 @@ static get jsonSchema() {
             id: {type:'integer'},
             user_id: {type: 'integer'},
             amount: {type: 'string'},
-            shipping_address:{type:'string'},
+            shipping_address:{  type:'object',
+                                required: ['address_1', 'town', 'county', 'post_code' ],
+                                properties: {
+                                    house_number: {type:'integer'},
+                                    address_1: {type: 'string'},
+                                    address_2: {type: 'string'},
+                                    town:{type: 'string'},
+                                    county: {type: 'string'},
+                                    post_code: {type: 'string'}
+                                }
+                            },    
             status: {type:'string'}
             }
         }

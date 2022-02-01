@@ -7,8 +7,8 @@ class OrdersService {
     // create new order
     async checkout(cartDTO) {
         const {cart_id, shipping_address} = cartDTO // change cart_id to user_Id once session setup
-        //find cart- object with cart_id and user_id 
-        //const cart = await CartService.findCartByUser(user_id); - swap below once session setup
+        // find cart- object with cart_id and user_id 
+        // const cart = await CartService.findCartByUser(user_id); - swap below once session setup
         const cart = await CartService.findCartById(cart_id)
         if (!cart) throw new Error('Cart Not Found!');
         // find cartItems - array of objects which contains order items product_id and quantity ordered.
@@ -35,7 +35,7 @@ class OrdersService {
         // take payment - to do
         let payment = true;
 
-        
+
         // decrement stock if payment ok
         cartItems.forEach( async item => {
             return await ProductsService
@@ -53,9 +53,10 @@ class OrdersService {
         return OrdersDAO.findAllOrders();
     }
 
-    getAllOrdersByCustomerId(user_id) {
+    getAllOrdersByCustomerId(user_id) {       
         return OrdersDAO.findAllCustomerOrders(user_id);
     }
+
     // returns order, line items and related products
     async getOrderAndOrderItemsById(id) {
         const lineItems = await OrdersDAO.findOrderAndOrderItemsById(id);

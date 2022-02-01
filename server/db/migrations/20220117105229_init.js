@@ -45,7 +45,7 @@ exports.up = function(knex) {
         table.increments();
         table.integer('user_id').references('id').inTable('users').onDelete('SET NULL');
         table.text('amount', 6, 2).notNullable();
-        table.text('shipping_address').notNullable();
+        table.json('shipping_address').notNullable();
         table.string('status', 30).notNullable();
         table.timestamps(true, true);
     })
