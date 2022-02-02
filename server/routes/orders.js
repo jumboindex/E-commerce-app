@@ -4,9 +4,6 @@ const OrdersController = require('../controller/orders');
 const { orderDTO, routeParamOrderId } = require('../dto/schema');
 const { validateDto } = require('../middleware/validate-dto');
 
-
-
-
 orderRouter.param('cartId', (req, res, next, id) => {
     req.body.cart_id = id
     next();
@@ -40,10 +37,18 @@ orderRouter.get('/orders/customer', (req, res, next) => {
 orderRouter.get('/orders/:orderId', (req, res, next) => {
     // auth 
     next()
-}, validateDto(routeParamOrderId), OrdersController.getOrderAndOrderItemsById)
+}, validateDto(routeParamOrderId), OrdersController.validateOrder , OrdersController.getOrderAndOrderItemsById)
 
 // updateOrderStatus
+orderRouter.put('/orders/status/:orderId', (req, res, next) => {
+    //auth
+    next()
+}, validateDto(routeParamOrderId), OrdersController.validateOrder, OrdersController.updateOrderStatus)
 
 // DeletOrderById
+orderRouter.delete('/orders/delete/:orderId', (req, res, next) => {
+    //auth
+    next();
+}, validateDto(routeParamOrderId), OrdersController.validateOrder, OrdersController.DeletOrderById)
 
 module.exports = orderRouter;

@@ -53,6 +53,10 @@ class OrdersService {
         return OrdersDAO.findAllOrders();
     }
 
+    getOrderById(id) {
+        return OrdersDAO.findOrderById(id);
+    }
+
     getAllOrdersByCustomerId(user_id) {       
         return OrdersDAO.findAllCustomerOrders(user_id);
     }

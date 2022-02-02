@@ -44,6 +44,10 @@ class OrdersDAO {
         return Orders.query();
     }
 
+    findOrderById(id){
+        return Orders.query().findById(id);
+    }
+
     findAllCustomerOrders(customerid) {
         console.log('running correct query')
         return Orders.query().where({user_id: customerid})
@@ -58,11 +62,12 @@ class OrdersDAO {
     }
 
     updateOrderStatusById(id, status) {
-        return Orders.query().findById(id).patch({status: status});
+        return Orders.query().findById(id).patch({status: status})
+                .returning(['id', 'status']);
     }
 
     DeletOrderById(id) {
-        return Orders.query().deleteById(id);
+        return Orders.query().deleteById(id).returning('*');
     }
 
 

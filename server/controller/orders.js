@@ -25,16 +25,25 @@ class OrdersController {
             next(err)
         }
     }
+
+    async validateOrder(req, res, next){
+        try {
+            const order = await OrdersService.getOrderById(req.body.order_id);
+            console.log(order)
+            if (!order) return next(ApiError.notFound('Order not found!'));  
+            else return next()
+        } catch (err) {
+            next(err)
+        }
+    }
     
     async getAllCustomerOrdersByCustomerId(req, res, next) {
         try {
             const customerOrders = await OrdersService.getAllOrdersByCustomerId(req.body.user_id);            
-            if (customerOrders.length === 0) throw new Error('No orders for customer');
+            if (customerOrders.length === 0) return next(ApiError.notFound('No orders for customer'));
             return res.status(200).json(customerOrders);
         } catch (err) {
-            if (err.message = 'No orders for customer') {
-                next(ApiError.notFound(err.message));
-            }
+
             next(err)
         }
     }
