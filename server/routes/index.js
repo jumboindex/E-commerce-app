@@ -1,5 +1,6 @@
 const express = require('express');
 const cartRouter = require('./cart');
+const checkoutRouter = require('./checkout');
 const orderRouter = require('./Orders');
 const productsRouter = require('./products');
 const userRouter = require('./users')
@@ -12,7 +13,9 @@ router.use('/products', productsRouter);
 //cart endpoint
 router.use('/cart', cartRouter);
 //order endpoint 
-router.use('/checkout', orderRouter)
+router.use('/orders', orderRouter)
+//checkout endpoint 
+router.use('/checkout', checkoutRouter)
 
 
 // 404 
